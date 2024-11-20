@@ -1,0 +1,860 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <title>Document</title>
+  <script>
+    function reloadPage() {
+    window.location.reload();
+    }
+  </script>
+
+  <style>
+    #btnform {
+      width: 13%;
+      height: 45px;
+      margin-top: 7px;
+      justify-content: center;
+      border-radius: 10px;
+      background-color:white;
+      border: 2px solid blue;
+      /* opacity: 0.6; */
+      font-weight:1000;
+      box-shadow: 5px 5px 5px blue;
+    }
+    #btnform:hover {
+      color: black;
+      border: 2px solid black;
+      box-shadow: 5px 5px 5px black;
+    }
+    #main_btn{
+        width: 100%;
+        float: left;
+        /* border: 4px solid black; */
+        padding-left: 9%;
+    }
+    #main_btn .Add_Stock{
+        border: 4px solid red;
+    }
+
+
+
+
+
+
+     /* form */
+     #stockform1{
+      width: 70%;
+      /* margin-top: 10px; */
+      height: 490px;
+      float: left;
+      /* border: 4px solid black; */
+    }
+
+
+    #frame{
+      float: right;
+      width: 29%;
+      height: 490px;
+      /* border: 5px solid black; */
+    }
+
+    #frame #resultFrame {
+            width: 95%;
+            height: 460px;
+            border: 3px solid #000;
+            margin-top: 10px;
+            background-color: white;
+            margin-left: 15px;
+            border-radius: 10px;
+        }
+
+        
+    #stockform{
+      width: 100%;
+      float: left;
+      height: 410px;
+      /* border: 5px solid red; */
+  }
+    #stockform #form_customer {
+      margin-top: 5px;
+      background-color: aqua;
+      border: 3px solid black;
+      border-radius: 20px;
+      width: 100%;
+      /* margin-left: 32%; */
+      padding: 30px;
+      line-height: 24px;
+      height: 400px;
+      box-shadow: 8px 8px 7px black;
+    }
+    #stockform #form_customer:hover {
+      box-shadow: 8px 8px 7px blue;
+    }
+
+    .row input {
+      border: 1px solid black;
+        margin-top: 1%;
+        border-radius: 5%;
+        width: 98%;
+    }
+    #form_customer h2 {
+      margin-top: -30px;
+      padding-left: 36%;
+      font-size: 40px;
+    }
+    .gender-selection {
+            display: flex;
+            margin-top: 8px;
+            /* width: 20px; */
+        }
+        .gender-selection label {
+            margin-right: 4px;
+        }
+        .gender-selection input {
+            margin-right: 10px;
+        }
+        .options{
+            display: flex;
+            margin-top: 22px;
+            width: 80px;
+            margin-left: -60px;
+            padding: 8px;
+            /* background-color: rebeccapurple; */
+        }
+    .section{
+      width: 98%;
+      height: 35px;
+    }
+
+
+
+
+
+
+    #backdiv{
+        width: 33%;
+        float: left;
+        height: 70px;
+        /* border: 5px solid black; */
+    }
+    #backdiv #back {
+      width: 47%;
+      height: 50px;
+      color: black;
+      background-color: white;
+      margin-top: 8px;
+      margin-left: 29%;
+      border: 3px solid black;
+      border-radius: 10px;
+      box-shadow: 5px 5px 5px black;
+      font-size: 25px;
+    }
+    #backdiv #back:hover {
+      color: black;
+      background-color: white;
+      border: 3px solid blue;
+      border-radius: 10px;
+      box-shadow: 5px 5px 5px blue;
+    }
+
+
+
+
+    #submitbtn{
+        width: 33%;
+        float: left;
+        height: 70px;
+        /* border: 5px solid black; */
+    }
+    #submitbtn #btn {
+      width: 77%;
+      height: 50px;
+      color: black;
+      background-color: white;
+      margin-top: 8px;
+      margin-left: 23%;
+      border: 3px solid black;
+      border-radius: 10px;
+      box-shadow: 5px 5px 5px black;
+      font-size: 25px;
+    }
+    #submitbtn #btn:hover {
+      color: black;
+      background-color: white;
+      border: 3px solid blue;
+      border-radius: 10px;
+      box-shadow: 5px 5px 5px blue;
+    }
+
+
+
+
+    #resetbtn{
+        width: 33%;
+        float: left;
+        height: 70px;
+        /* border: 5px solid black; */
+    }
+    #resetbtn #btn1 {
+      width: 47%;
+      height: 50px;
+      color: black;
+      background-color: white;
+      margin-top: 8px;
+      margin-left: 50%;
+      border: 3px solid black;
+      border-radius: 10px;
+      box-shadow: 5px 5px 5px black;
+      font-size: 25px;
+    }
+    #resetbtn #btn1:hover {
+      color: black;
+      background-color: white;
+      border: 3px solid blue;
+      border-radius: 10px;
+      box-shadow: 5px 5px 5px blue;
+    }
+
+
+   
+  </style>
+
+</head>
+
+<body>
+  
+
+    <!-- BOOK NOW Form start -->
+    <div id="form-image" style="background-image: url('images/1.jpg'); height: 503px; background-repeat: no-repeat; background-size: cover; margin: 8px;">
+                <!-- <h1>Admin Dashboard</h1> -->
+        <!-- <div id="main_btn">
+            <div>
+                <button type="button" id="btnform"><a href="Add_Customer.html">Add_Customer</a></button>
+                <button type="button" id="btnform"><a href="Add_Employee.html">Add_Employee</a></button>
+                <button class="Add_Stock" type="button" id="btnform"><a href="Add_Stock.html">Add_Stock</a></button>
+                <button type="button" id="btnform"><a href="Add_Supplier.html">Add_Supplier</a></button>
+                <button type="button" id="btnform"><a href="Add_Documents.html">Add_Documents</a></button>
+                <button type="button" id="btnform"><a href="Add_Purchases.html">Add_Purchases</a></button> -->
+
+                <!-- <button type="button" id="btnform"><a href="Add_Sales.html">Add_Sales</a></button> -->
+
+                <!-- <button type="button" id="btnform"><a href="Return_Product.html">Return_Product</a></button>
+            </div>
+        </div> -->
+
+
+        <div id="stockform1">
+            <div id="stockform">
+                <form id="form_customer" action="process_Stock.php" method="post" target="resultFrame">
+                    <h2>Stock Form</h2>
+                    <div class="row align-items-start">
+                        <div class="col colour1">
+                            <!-- <label for="first_name">Product Name:</label><br>
+                            <input type="text" id="first_name" name="first_name" required><br> -->
+                                <label  for="Product_Name_Male" >Product Name Male</label>
+                                <select class="section" id="Product_Name_Male" name="Product_Name_Male">
+                                  <option value="">Select Product</option>
+
+                                  <option value=""></option>
+                                    <option value="">------Ahram Kids------</option>
+                                  <option value="Zaby Wool">Zaby Wool</option>
+                                  <option value="Karandi Wool">Karandi Wool</option>
+                                  <option value="Vigo Wool">Vigo Wool</option>
+                                  <option value="Zuriq Wool">Zuriq Wool</option>
+                                  <option value="Patangeer Wool">Patangeer Wool</option>
+                                  <option value="Renault Wool">Renault Wool</option>
+                                  <option value="Ventage Wool">Ventage Wool</option>
+                                  <option value="Panama Wool">Panama Wool</option>
+                                  
+                                  <option value="pashmina Wool">pashmina Wool</option>
+                                  <option value="Chap Wool">Chap Wool</option>
+                                  <option value="Pepsico Wool">Pepsico Wool</option>
+                                  <option value="Magic Wool">Magic Wool</option>
+                                  <option value="Great Suiting">Great Suiting</option>
+                                  <option value="German Wool">German Wool</option>
+                                  <option value="Best Vicona">Best Vicona</option>
+                                  <option value="5 Star">5 Star </option>
+                                  <option value="Mashter Wool">Mashter Wool</option>
+                                  <option value="Chand Thara Wool">Chand Thara Wool</option>
+                                  <option value="Business Cloth">Business Cloth</option>
+                                  <option value="Black Grapes">Black Grapes</option>
+                                  <option value="Cambridge Swiss">Cambridge Swiss</option>
+                                  <option value="Italian">Italian</option>
+                                  <option value="Zamzama">Zamzama</option>
+                                  <option value="Boski Boring Gala">Boski Boring Gala</option>
+                                  <option value="Royal Spun Ban Pati">Royal Spun Ban Pati</option>
+                                  <option value="Royal Spun Ban Gala">Royal Spun Ban Gala</option>
+                                  <option value="Skab Boski Hand Made">Skab Boski Hand Made</option>
+                                  <option value="Skab Boski Imbroidary">Skab Boski Imbroidary</option>
+                                  <option value="Candy Kather">Candy Kather</option>
+                                  <option value="Royal Spun Suiting">Royal Spun Suiting</option>
+                                  <option value="Design V.402">Design V.402</option>
+                                  <option value="Washingware V.4001">Washingware V.4001</option>
+                                  <option value="White strom">White strom</option>
+                                  <option value="Narkins Cranprry">Narkins Cranprry</option>
+                                  <option value="Narkins habibi">Narkins habibi</option>
+                                  <option value="Rajahs Submit">Rajahs Submit</option>
+                                  <option value="Dynasty SuperActive">Dynasty SuperActive</option>
+                                  <option value="Pasha">Pasha</option>
+                                  <option value="Pasha Moon Stone">Pasha Moon Stone</option>
+                                  <option value="MF High Class Gum pati">MF High Class Gum pati</option>
+                                  <option value="MS Gala Khadi">MS Gala Khadi</option>
+                                  <option value="Orient Ghadi">Orient Ghadi </option>
+                                  <option value="Orient Ghadi V.48">Orient Ghadi V.48</option>
+                                  <option value="Orient Ghadi V.55">Orient Ghadi V.55</option>
+                                  <option value="MS Khadi">MS Khadi</option>
+                                  <option value="Chawla Gala Khadi">Chawla Gala Khadi</option>
+                                  <option value="Grace khadi">Grace khadi</option>
+                                  <option value="JNG Chicken kari">JNG Chicken kari</option>
+                                  <option value="JNG Chicken kari V.48">JNG Chicken kari V.48</option>
+                                  <option value="Orient karhi V.44">Orient karhi V.44</option>
+                                  <option value="Boski karhi V.6">Boski karhi V.6</option>
+                                  
+                                  
+                                  <option value="Important Wool">Important Wool</option>
+                                  <option value="Toyobo">Toyobo</option>
+                                  <option value="Narkins Italian V.0006">Narkins Italian V.0006</option>
+                                  <option value="Narkins Italian V.0005">Narkins Italian V.0005</option>
+                                  <option value="Narkins Italian V.42913">Narkins Italian V.42913</option>
+                                  <option value="Narkins Italian V.30010">Narkins Italian V.30010</option>
+                                  <option value="Glamur Zeqon">Glamur Zeqon</option>
+                                  
+                                  <option value="Boski karhi Latha Shalwar">Boski karhi Latha Shalwar</option>
+                                  <option value="karandi karhi">karandi karhi</option>
+                                  <option value="Washingware karhi">Washingware karhi</option>
+                                  <option value="Washingware karhi V.38">Washingware karhi V.38</option>
+                                  <option value="Washingware karhi V.42">Washingware karhi V.42</option>
+                                  <option value="Washingware karhi V.44">Washingware karhi V.44</option>
+                                  <option value="Washingware karhi V.28">Washingware karhi V.28</option>
+                                  <option value="Washingware karhi V.36">Washingware karhi V.36</option>
+                                  <option value="Washingware karhi V.32">Washingware karhi V.32</option>
+                                  <option value="Washingware karhi V.24">Washingware karhi V.24</option>
+                                  <option value="Washingware karhi V.45">Washingware karhi V.45</option>
+                                  <option value="Washingware karhi V.55">Washingware karhi V.55</option>
+
+
+
+
+
+                                  <option value=""></option>
+                                  <option value=""></option>
+                                    <option value="">------Ahram Kids------</option>
+                                    <option value="Ahram S/0 khadi V.12">Ahram S/0 khadi V.12</option>
+                                    <option value="Ahram S/1 khadi V.13.5">Ahram S/1 khadi V.13.5</option>
+                                    <option value="Ahram S/2 khadi V.15">Ahram S/2 khadi V.15</option>
+
+                                    <option value=""></option>
+                                    <option value="">------Ahram Medium------</option>
+                                    <option value="Ahram S/M V.18">Ahram S/M V.18</option>
+
+                                    <option value=""></option>
+                                    <option value="">------Ahram Large------</option>
+                                    <option value="Ahram S/L khadi V.18">Ahram S/L khadi V.18</option>
+                                    <option value="Ahram S/L khadi V.26">Ahram S/L khadi V.26</option>
+                                    <option value="Ahram S/L khadi V.27">Ahram S/L khadi V.27</option>
+                                    <option value="Ahram S/L khadi V.29">Ahram S/L khadi V.29</option>
+                                    
+                                    <option value=""></option>
+                                    <option value="Ahram S/L Cotton V.18">Ahram S/L Cotton V.18</option>
+                                    <option value="Ahram S/L Cotton V.29">Ahram S/L Cotton V.29</option>
+
+                                    <option value=""></option>
+                                    <option value="Ahram S/L Tawel V.18">Ahram S/L Tawel V.18</option>
+                                    <option value="Ahram S/L Tawel V.22">Ahram S/L Tawel V.22</option>
+                                    <option value="Ahram S/L Tawel V.24">Ahram S/L Tawel V.24</option>
+                                    <option value="Ahram S/L Tawel V.27">Ahram S/L Tawel V.27</option>
+                                    <option value="Ahram S/L Tawel V.32">Ahram S/L Tawel V.32</option>
+
+
+
+                                    
+                                  <option value=""></option>
+                                  <option value=""></option>
+                                    <option value="">------Lungi and Lacha------</option>
+                                    <option value="Lungi V.1">Lungi V.1</option>
+                                    <option value="Lungi V.7.5">Lungi V.7.5</option>
+                                    <option value="Lungi">Lungi</option>
+                                    <option value="Lacha">Lacha</option>
+
+
+
+                                    <option value=""></option>
+                                    <option value=""></option>
+                                    <option value="">------Lachay------</option>
+                                    <option value="Lachay 5y">Lachay 5y</option>
+                                    <option value="Lachay 10y">Lachay 10y</option>
+
+
+
+                                    <option value=""></option>
+                                    <option value=""></option>
+                                    <option value="">------Woolshal------</option>
+                                    <option value="Shal1">Shal1</option>
+                                    <option value="Shal2">Shal2</option>
+                                    <option value="Shal3">Shal3</option>
+                                    <option value="Shal4">Shal4</option>
+                                    <option value="Shal5">Shal5</option>
+                                    <option value="Shal6">Shal6</option>
+                                    <option value="Shal7">Shal7</option>
+                                    <option value="Shal8">Shal8</option>
+                                    <option value="Shal9">Shal9</option>
+                                    <option value="Shal10">Shal10</option>
+                                    <option value="Shal11">Shal11</option>
+                                    <option value="Shal12">Shal12</option>
+                                    <option value="Shal13">Shal13</option>
+
+
+
+
+                                    option value=""></option>
+                                    <option value=""></option>
+                                    <option value="">------karanthi Safa------</option>
+                                    <option value="karanthi Safa1">karanthi Safa1</option>
+                                    <option value="Indian Dupata">Indian Dupata</option>
+                                    <option value="Indian Pagh">Indian Pagh</option>
+                                    <option value="Indian Pagh1">Indian Pagh1</option>
+                                    <option value="Indian Pagh2">Indian Pagh2</option>
+                                    <option value="Indian Dupata1">Indian Dupata1</option>
+
+
+
+
+                                  <option value="cs"></option>
+                                </select>
+            
+
+
+                                <label for="Product_Name_Female" >Product Name Female</label>
+                                <select class="section" id="Product_Name_Female" name="Product_Name_Female">
+                                    <option value="">Select Product</option>
+
+
+                                    <option value="">------Linen------</option>
+                                    <option value="Mahnoor Classic Linen Full Suit">Mahnoor Classic Linen Full Suit</option>
+                                    <option value="Palkee Classic Linen Full Suit">Palkee Classic Linen Full Suit</option>
+                                    <option value="Classic Linen 3 Piece">Classic Linen 3 Piece</option>
+                                    <option value="Linen 2 Piece">Linen 2 Piece</option>
+                                    <option value="5 star Linen naroz">5 star Linen laroz</option>
+                                    <option value="Guljan Linen">Guljan Linen</option>
+                                    <option value="Meraj Lexury Fancey Linen">Meraj Lexury Fancey Linen</option>
+                                    <option value="Meraj Korian Linen">Meraj Korian Linen</option>                                    
+                                    <option value="CC Meraj Linen">CC Meraj Linen</option>
+                                    <option value="Habib Linen">Habib Linen</option>
+                                    <option value="CC Clasic Linen">CC Clasic Linen</option>
+                                    <option value="Colorita Linen">Colorita Linen</option>
+                                    <option value="plane linen">plane linen</option>
+                                    <option value="Colorita Mother Collection linen">Colorita Mother Collection linen</option>
+                                    <option value="Colorita Banodoria linen">Colorita Banodoria linen</option>
+                                    <option value="Slab Linen">Slab Linen</option>
+
+
+                                    <option value=""></option>
+                                    <option value="">------Cotton------</option>
+                                    <option value="Classic Cotton print">Classic Cotton print</option>
+                                    <option value="plane cotton">plane cotton</option>
+
+
+                                    <option value=""></option>
+                                    <option value="">------Kather------</option>
+                                    <option value="Gather Print 2 Piece">Kather Print 2 Piece</option>
+                                    <option value="Kather print 3 piece">Kather print 3 piece</option>
+                                    <option value="Kather WolShal 3 Piece">Kather WolShal 3 Piece</option>
+                                    <option value="plane Kather">plane Kather</option>
+
+
+                                    <option value=""></option>
+                                    <option value="">------Marina------</option>
+                                    <option value="Marina 2 Piece">Marina 2 Piece</option>
+                                    <option value="Marina Print 3 piece">Marina Print 3 piece</option>
+                                    <option value="Vichar Marina">Vichar Marina</option>
+                                    <option value="kadi Marina 3 piece">kadi Marina 3 piece</option>
+                                    <option value="plane Marina">plane Marina</option>
+                                    <option value="WoolShal Marina">WoolShal Marina</option>
+
+
+                                    <option value=""></option>
+                                    <option value="">------Karandi------</option>
+                                    <option value="Karandi Print">Karandi Print</option>
+
+
+                                    <option value=""></option>
+                                    <option value="">------Viscos------</option>
+                                    <option value="Viscos Print">Viscos Print</option>
+
+
+                                    <option value=""></option>
+                                    <option value="">------Dhanak------</option>
+                                    <option value="Dhanak Full Suit">Dhanak Full Suit</option>
+
+                                    
+                                    <option value=""></option>
+                                    <option value="">------Lawn------</option>
+                                    <option value="Single print 2 Piece">Single print 2 Piece</option>
+
+
+                                    <option value=""></option>
+                                    <option value="">----------Fancey Boutique Winter----------</option>
+                                    <option value="">------Fancey Marina------</option>
+                                    <option value="Fancey Marina">Fancey Marina</option>
+                                    <option value="Boutique Marina">Boutique Marina</option>
+                                    <option value="Boutique V.28">Boutique V.28</option>
+                                    <option value="Boutique V.12">Boutique V.12</option>
+                                    <option value="Boutique V.8">Boutique V.8</option>
+                                    <option value="Boutique V.11">Boutique V.11</option>
+                                    <option value="Boutique V.4">Boutique V.4</option>
+                                    <option value="Boutique V.5">Boutique V.5</option>
+                                    <option value="Boutique V.23">Boutique V.23</option>
+                                    <option value="Boutique Almas V.2">Boutique Almas V.2</option>
+                                    <option value="Boutique Almas V.3">Boutique Almas V.3</option>
+                                    <option value="Boutique Nashmeen V.2">Boutique Nashmeen V.2</option>
+                                    <option value="Boutique Rang Raza V.2">Boutique Rang Raza V.2</option>
+                                    <option value="Boutique Rang Raza V.3">Boutique Rang Raza V.3</option>
+                                    <option value="Boutique Chickan kari">Boutique Chickan kari</option>
+                                    <option value="Boutique Chickan kari V.27">Boutique Chickan kari V.27</option>
+                                    <option value="Boutique Marina Chickan kari">Boutique Marina Chickan kari</option>
+                                    <option value="Marina karhi">Marina karhi</option>
+                                    <option value="Meena kari V.2">Meena kari V.2</option>
+                                    <option value="Marina Palachi">Marina Palachi</option>
+                                    <option value="Mask V.11">Mask V.11</option>
+                                    <option value="Mask V.9">Mask V.9</option>
+                                    <option value="Thank Slab">Thank Slab</option>
+
+
+                                    <option value="">------Fancey Khadder------</option>
+                                    <option value="Fancey Khadder">Fancey Khadder</option>
+
+
+                                    <option value="">------Boutique Linen------</option>
+                                    <option value="Fancey Linen">Fancey Linen</option>
+                                    <option value="Fancey Raplica">Fancey Raplica</option>
+                                    <option value="Fancey Bareza Linen">Fancey Bareza Linen</option>
+                                    <option value="Fancey Linen Raplica">Fancey Linen Raplica</option>
+                                    <option value="Boutique Linen L/S">Boutique Linen L/S</option>
+                                    <option value="Boutique Linen">Boutique Linen</option>
+                                    <option value="Boutique Linen S/D">Boutique Linen S/D</option>
+                                    <option value="Amina B Linen V.419">Amina B Linen V.419</option>
+                                    <option value="Amina B Linen V.207">Amina B Linen V.207</option>
+                                    <option value="Aysha B Linen V.2">Aysha B Linen V.2</option>
+                                    <option value="Sanoor Linen">Sanoor Linen</option>
+                                    <option value="Amina B Linen Shirt">Amina B Linen Shirt</option>
+                                    <option value="Boutique Linen Fancey
+                                    ">Boutique Linen Fancey</option>
+                                    <option value="Linen Palachi">Linen Palachi</option>
+                                    <option value="Boutique Merjan">Boutique Merjan</option>
+                                    <option value="Amina B Linen V.414">Amina B Linen V.414</option>
+                                    <option value="Amina B Kids 2 Piece">Amina B Kids 2 Piece</option>
+
+
+                                    <option value="">------Boutique Viscos------</option>
+                                    <option value="Boutique Viscos">Boutique Viscos</option>
+                                    <option value="Boutique Viscos V.124">Boutique Viscos V.124</option>
+                                    <option value="Boutique Viscos V.026">Boutique Viscos V.026</option>
+                                    <option value="Boutique Viscos V.126">Boutique Viscos V.126</option>
+                                    <option value="Hajra Waseem Viscos V.18 ">Hajra Waseem Viscos V.18</option>
+                                    <option value="Amina B Linen V.422">Amina B Linen V.422</option> 
+                                    <option value="Amina B Linen V.417">Amina B Linen V.417</option> 
+
+
+                                    <option value="">------Boutique Dhanak------</option>
+                                    <option value="Dhanak Raplica">Dhanak Raplica</option>
+                                    <option value="Dhanak V.6013">Dhanak V.6013</option>
+                                    <option value="Dhanak Boutique">Dhanak Boutique</option>
+                                    <option value="Hajra Waseem V.23">Hajra Waseem V.23</option>
+
+
+                                    <option value="">------Boutique Shamray------</option>
+                                    <option value="Boutique Shamray">Boutique Shamray</option>
+
+
+                                    <option value="">------Boutique Cotail------</option>
+                                    <option value="Boutique Cotail">Boutique Cotail</option>
+
+
+                                    <option value="">------Boutique Kaddar------</option>
+                                    <option value="Digital Kaddar">Digital Kaddar</option>
+                                    <option value="Boutique Kaddar">Boutique Kaddar</option>
+
+
+                                    <option value="">------Boutique Cotrai------</option>
+                                    <option value="Amina B V.363">Amina B V.363</option>
+                                    <option value="Boutique Cotrai">Boutique Cotrai</option>
+
+
+                                    <option value=""></option>
+                                    <option value="">------Boutique Karandi------</option>
+                                    <option value="Karandi V.6012">Karandi V.6012</option>
+                                    <option value="Karandi V.955">Karandi V.955</option>
+                                    <option value="Karandi V.27">Karandi V.27</option>
+                                    <option value="Karandi V.66">Karandi V.66</option>
+                                    <option value="Karandi V.9">Karandi V.9</option>
+                                    <option value="Karandi V.107">Karandi V.107</option>
+                                    <option value="Karandi V.8634">Karandi V.8634</option>
+                                    <option value="Boutique V.17">Boutique V.17</option>
+                                    <option value="Boutique zirwa">Boutique zirwa</option>
+                                    <option value="Boutique Karandi V.15">Boutique Karandi V.15</option>
+
+
+
+
+
+                                    <option value=""></option>
+                                    <option value="">------Form Jay Namaz------</option>
+                                    <option value="Jay Namaz V.11">Jay Namaz V.11</option>
+                                    <option value="Jay Namaz V.13">Jay Namaz V.13</option>
+                                    <option value="Jay Namaz V.14">Jay Namaz V.14</option>
+                                    <option value="Jay Namaz V.16">Jay Namaz V.16</option>
+
+                                    <option value=""></option>
+                                    <option value="">------Mat Jay Namaz------</option>
+                                    <option value="Jay Namaz V.6">Jay Namaz V.6</option>
+                                    <option value="Jay Namaz V.8">Jay Namaz V.8</option>
+                                    <option value="Jay Namaz V.4.5">Jay Namaz V.4.5</option>
+                                    <option value="Jay Namaz V.12">Jay Namaz V.12</option>
+
+
+
+
+                                
+                                    <option value=""></option>
+                                    <option value="">------Shafoon Dupata------</option>
+                                    <option value="Shahzadi Jarjet">Shahzadi Jarjet</option>
+                                    <option value="2 Dil Jarjet">2 Dil Jarjet</option>
+                                    <option value="Nayab Grip">Nayab Grip </option>
+                                    <option value="Anam Shafoon">Anam Shafoon</option>
+                                    <option value="Rashmi Pinthi Dupata">Rashmi Pinthi Dupata</option>
+
+
+                                    <option value=""></option>
+                                    <option value="">------Stallers------</option>
+                                    <option value="Stallers Lawn">Stallers Lawn</option>
+
+
+                                    <option value=""></option>
+                                    <option value="">------Shafoon Dupata Imbroidary------</option>
+                                    <option value="Shafoon Dupata ">Shafoon Dupata</option>
+                                    <option value="Shafoon Dupata Imbroidary">Shafoon Dupata Imbroidary</option>
+
+
+
+                                    <option value=""></option>
+                                    <option value="">------Ajrak Shal------</option>
+                                    <option value="Ajrak Shal ">Ajrak Shal</option>
+
+
+
+                                    <option value=""></option>
+                                    <option value="">------Burkha------</option>
+                                    <option value="Burkha">Burkha</option>
+
+                                    
+                              
+                                    <option value=""></option>
+                                    <option value="">------Burkha------</option>
+                                    <option value="Burkha">Burkha</option>
+
+
+
+
+                                    <option value=""></option>
+                                    <option value=""></option>
+                                    <option value="">------Ladies Woolshal------</option>
+                                    <option value="Ladies Shal1">Ladies Shal1</option>
+                                    <option value="Ladies Shal2">Ladies Shal2</option>
+                                    <option value="Ladies Shal3">Ladies Shal3</option>
+                                    <option value="Ladies Shal4">Ladies Shal4</option>
+                                    <option value="Ladies Shal5">Ladies Shal5</option>
+                                    <option value="Ladies Shal6">Ladies Shal6</option>
+                                    <option value="Ladies Shal7">Ladies Shal7</option>
+                                    <option value="Ladies Namaz Shal8 without sleeves">Ladies Namaz Shal8 without sleeves</option>
+                                    <option value="Ladies Namaz Shal9 with sleeves">Ladies Namaz Shal9 with sleeves</option>
+                                    <option value="Ladies Shal10">Ladies Shal10</option>
+                                    <option value="Welwet Shal11">Welwet Shal11</option>
+                                    <option value="Welwet Shal12">Welwet Shal12</option>
+                                    <option value="Welwet Shal13">Welwet Shal13</option>
+                                    <option value="Welwet Shal14">Welwet Shal14</option>
+
+
+
+                                    <option value=""></option>
+                                    <option value="">------Ladies Ahram------</option>
+                                    <option value="Ladies Ahram V.7">Ladies Ahram V.7</option>
+                                    <option value="Ladies Ahram V.12">Ladies Ahram V.12</option>
+
+
+
+                                    <option value=""></option>
+                                    <option value="">------Haji Chatai------</option>
+                                    <option value="Haji Chatai">Haji Chatai</option>
+
+                                    <option value=""></option>
+                                    <option value="">------Haji Pillow------</option>
+                                    <option value="Haji Pillow">Haji Pillow</option>
+
+                                    <option value=""></option>
+                                    <option value="">------Haji Leather Belt------</option>
+                                    <option value="Haji Leather Belt/1">Haji Leather Belt/1</option>
+                                    <option value="Haji Leather Belt/2">Haji Leather Belt/2</option>
+                                    <option value="Haji Leather Belt/3">Haji Leather Belt/3</option>
+                                    <option value="Haji Leather Belt/4">Haji Leather Belt/4</option>
+                                    <option value="Haji Leather Belt/5">Haji Leather Belt/5</option>
+                                    <option value="Haji Leather Belt/6">Haji Leather Belt/6</option>
+
+                                    <option value=""></option>
+                                    <option value="">------Haji bag------</option>
+                                    <option value="Haji bag">Haji bag</option>
+
+
+                                    <option value=""></option>
+                                    <option value="">------Ladies Chadar------</option>
+                                    <option value="Ladies lawn Chadar/1">Ladies lawn Chadar/1</option>
+                                    <option value="Ladies lawn Chadar/2">Ladies lawn Chadar/2</option>
+                                    <option value="Ladies lawn Chadar/3">Ladies lawn Chadar/3</option>
+                                    <option value="Ladies lawn Chadar/4">Ladies lawn Chadar/4</option>
+                                    <option value=""></option>
+                                    <option value="Ladies Swiss Chadar/1">Ladies Swiss Chadar/1</option>
+                                    <option value="Ladies Swiss Chadar/2">Ladies Swiss Chadar/2</option>
+                                    <option value="Ladies Swiss Chadar/3">Ladies Swiss Chadar/3</option>
+                                    <option value=""></option>
+                                    <option value="Ladies lawn Dupatta/1">Ladies lawn Dupatta/1</option>
+                                    <option value="Ladies lawn Dupatta/2">Ladies lawn Dupatta/2</option>
+                                    <option value="Ladies Linen Dupatta/3">Ladies Linen Dupatta/3</option>
+
+
+                                    <option value=""></option>
+                                    <option value="">------Rashmi Shalwar------</option>
+                                    <option value="Rashmi Shalwar">Rashmi Shalwar</option>
+                                    
+                                    
+
+                                </select>
+
+
+
+
+                            <!-- <label for="last_name">Brand:</label><br>
+                            <input type="text" id="last_name" name="last_name" required><br> -->
+            
+                            <label for="Other_Product">Other Product:</label><br>
+                            <input type="text" id="Other_Product" name="Other_Product"><br>
+            
+                            <label for="Box">Box:</label><br>
+                              <select class="section" id="Box" name="Box">
+                                  <option value="">Select BOX</option>
+                                  <option value="Yes">Yes</option>
+                              </select><br>
+            
+                            <label for="Meter">Meter:</label><br>
+                            <input type="number" id="Meter" name="Meter"><br>
+                        </div>
+            
+                        <div class="col colour2">
+                            <label for="Retail_Price">Retail Price:</label><br>
+                            <input type="number" id="Retail_Price" name="Retail_Price"><br>
+                          
+                            <label for="Purchase_price">Purchase price:</label><br>
+                            <input type="number" id="Purchase_price" name="Purchase_price"><br>
+          
+                            <label for="Quntity">Suit Quntity:</label><br>
+                            <input type="number" id="Quntity" name="Quntity"><br>
+          
+                            <label  for="Season" >Season</label>
+                            <select class="section" id="Season" name="Season">
+                              <option value="">Select Season</option>
+                              <option value="Winter">Winter</option>
+                              <option value="Summer">Summer</option>
+                              <option value="Medium">Medium</option>
+                              </select>
+          
+                            <div class="gender-selection">
+                              <label for="Gender">Gender:</label><br>
+                              <div class="options">
+                                  <label for="male">Male</label>
+                                  <input type="radio" name="Gender" id="male" value="Male">
+                      
+                                  <label for="female">Female</label>
+                                  <input type="radio" name="Gender" id="female"  value="Female">
+                      
+                                  <label for="other">Other</label>
+                                  <input type="radio" name="Gender" id="other" value="Other">
+                              </div>
+                          </div>
+                            
+                      </div>
+            
+                        <div class="col colour4">
+                            <label for="Warehouse_ID">Warehouse_ID:</label><br>
+                            <input type="text" id="Warehouse_ID" name="Warehouse_ID"><br>
+            
+                            <label for="Place">Place:</label><br>
+                            <input type="text" id="Place" name="Place"><br>
+          
+                            <label for="Brand">Brand:</label><br>
+                            <input type="text" id="Brand" name="Brand"><br>
+          
+                            <label for="Out_of_Stock">Out of Stock:</label><br>
+                            <input type="number" id="Out_of_Stock" name="Out_of_Stock" placeholder="Enter Number"><br>
+                            
+                            <label for="Size">Size:</label><br>
+                            <input type="text" id="Size" name="Size"><br>
+            
+                        </div>
+            
+                        <div class="col colour4">
+                            
+            
+                            <label for="Category">Category:</label><br>
+                            <input type="text" id="Category" name="Category"><br>
+          
+                            <!-- <label for="Box">Box:</label><br>
+                            <input type="text" id="Box" name="Box"><br> -->
+          
+                            <label for="Damage_Piece">Damage Piece:</label><br>
+                            <input type="number" id="Damage_Piece" name="Damage_Piece"><br>
+            
+                            <label for="Description">Description:</label><br>
+                            <input type="text" id="Description" name="Description"><br>
+                        </div>
+            
+                    </div>
+                </form>
+            </div>
+            <div id="backdiv">
+              <button id="back"><a href="Product_Colour.php">Add Colour</a></button>
+          </div>
+          <div id="submitbtn">
+            <!-- <button id="btn" type="submit">Add Stock</button> -->
+            <button id="btn" type="button" onclick="submitForm()">Add Stock</button>
+          </div>
+          <div id="resetbtn">
+            <button type="button" id="btn1" id="batn2" onclick="reloadPage()">Reset</button>
+          </div>
+
+        </div>
+    
+    <div id="frame">
+      <iframe name="resultFrame" id="resultFrame"></iframe>
+    </div>
+  </div>
+<script>
+    function submitForm() {
+      document.getElementById('form_customer').submit();
+    }
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+
+    <script>
+      document.getElementById('btn').addEventListener('click', function() {
+          setTimeout(function() {
+              window.location.reload();
+          }, 1000); // 15000 milliseconds = 15 seconds
+      });
+  </script>
+
+</body>
+
+</html>

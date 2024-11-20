@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <title>Staff Dashboard</title>
+
+  <style>
+
+
+    h1{
+        margin-left: 36%;
+        padding-top: 5%;
+        font-size: 55px;
+    }
+
+
+
+    #btnform {
+      width: 230px;
+      height: 80px;
+      margin-top: 10px;
+      justify-content: center;
+      border-radius: 10px;
+      background-color:white;
+      border: 2px solid blue;
+      /* opacity: 0.6; */
+      font-weight:1000;
+      box-shadow: 5px 5px 5px blue;
+    }
+
+    #btnform:hover {
+      color: black;
+      border: 2px solid black;
+      box-shadow: 5px 5px 5px black;
+    }
+
+    #btnform1 {
+        width: 230px;
+        height: 80px;
+      margin-top: 10px;
+      justify-content: center;
+      border-radius: 10px;
+      background-color:white;
+      border: 2px solid blue;
+      /* opacity: 0.6; */
+      font-weight:1000;
+      margin-left: 30px;
+      box-shadow: 5px 5px 5px blue;
+    }
+
+    #btnform1:hover {
+      color: black;
+      border: 2px solid black;
+      box-shadow: 5px 5px 5px black;
+    }
+
+    #main_btn{
+        margin-left: 35%;
+        padding-top: 5%;
+    }
+    /* #part2{
+        margin-top: 30px;
+    } */
+
+
+    #backdiv{
+        width: 100%;
+        float: left;
+        height: 70px;
+        margin-top: 185px;
+        /* border: 5px solid black; */
+    }
+
+    #backdiv #back {
+      width: 13%;
+      height: 50px;
+      color: black;
+      background-color: white;
+      margin-top: 8px;
+      margin-left: 3%;
+      border: 3px solid black;
+      border-radius: 10px;
+      box-shadow: 5px 5px 5px black;
+      font-size: 25px;
+    }
+    #backdiv #back:hover {
+      color: black;
+      background-color: white;
+      border: 3px solid blue;
+      border-radius: 10px;
+      box-shadow: 5px 5px 5px blue;
+    }
+
+  </style>
+
+</head>
+
+<body>
+  
+
+    <!-- BOOK NOW Form start -->
+    <div id="form-image" style="background-image: url('images/1.jpg'); height: 550px; background-repeat: no-repeat; background-size: cover; margin: 8px;">
+            <h1>Staff Dashboard</h1>
+        <div id="main_btn">
+            <div>
+                <button type="button" id="btnform"><a href="Add_page_of_staff.php">ADD</a></button>
+                <button type="button" id="btnform1"><a href="staff_main_view_page.php">VIEW</a></button>
+            </div>
+            <!-- <div id="part2">
+                <button type="button" id="btnform"><a href="Update_page.html">UPDATE</a></button>
+                <button type="button" id="btnform1"><a href="Delete_page.html">DELETE</a></button>
+            </div> -->
+        </div>
+
+        <div id="backdiv">
+          <button id="back"><a href="index.php">Back</a></button>
+        </div>
+</body>
+
+</html>

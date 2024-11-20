@@ -1,0 +1,871 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <title>Document</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+ 
+
+
+
+  <script>
+    var dataVisible = false;
+     function searchData() {
+            var searchInput = document.getElementById('search-input').value.trim();
+            var dataTable = document.getElementById('data-table');
+            var xhr = new XMLHttpRequest();
+            
+            // Construct the URL based on the search input
+            var url = 'process_customer_Order.php';
+            if (searchInput !== '') {
+                url += '?query=' + encodeURIComponent(searchInput);
+            }
+            
+            xhr.open('GET', url, true);
+            xhr.onload = function() {
+                if (this.status == 200) {
+                    dataTable.innerHTML = this.responseText;
+                }
+            };
+            xhr.send();
+        }
+
+        window.onload = function() {
+            searchData(); // Load initial data when the page loads
+        };
+
+
+        function handleSearchInput() {
+            var searchInput = document.getElementById('search-input').value.trim();
+            if (searchInput.length > 0) {
+                searchData(); // Call searchData function to fetch data
+            } else {
+                // Clear data table when search input is empty
+                document.getElementById('data-table').innerHTML = '';
+            }
+        }
+
+
+
+
+        // get data from table on click and put in input fields
+    function selectProduct(element) {
+        var productName = element.getElementsByTagName('td')[0].innerText; // Get Product Name
+        var itemInput = document.getElementById('Item_of_customer_order');
+        var itemInput1 = document.getElementById('product_name');
+
+        if (itemInput.value || itemInput1.value) {
+            itemInput.value += ', ' + productName;
+            itemInput1.value += ', ' + productName;
+        } else {
+            itemInput.value = productName;
+            itemInput1.value = productName;
+        }
+    }
+
+    
+
+    // Function to handle selecting retail price
+    function selectPrice(element) {
+        var retailPrice = element.getElementsByTagName('td')[1].innerText; // Get Retail Price
+        var priceInput = document.getElementById('Price');
+
+        if (priceInput.value) {
+            priceInput.value += ', ' + retailPrice;
+        } else {
+            priceInput.value = retailPrice;
+        }
+    }
+
+    function selectMeter(element) {
+        var meter = element.getElementsByTagName('td')[2].innerText; // Get Retail Price
+        var priceInput = document.getElementById('Meter');
+
+        if (priceInput.value) {
+            priceInput.value += ', ' + meter;
+        } else {
+            priceInput.value = meter;
+        }
+    }
+
+
+
+     function selectorderid(element) {
+         var meter = element.getElementsByTagName('td')[3].innerText; // Get Retail Price
+         var priceInput = document.getElementById('order_customer_id');
+
+         if (priceInput.value) {
+             priceInput.value += ', ' + meter;
+         } else {
+             priceInput.value = meter;
+         }
+     }
+     
+    document.getElementById('Quantity').addEventListener('input', updateBills);
+
+
+
+    //  discount function
+    // calculate current bill of one item
+    function calculateCurrentTotal() {
+    // Get the input values
+    var price = parseFloat(document.getElementById("Price").value) || 0;
+    var quantity = parseFloat(document.getElementById("Quantity").value) || 1; // Default quantity to 1 if empty
+    // discount in numbers
+    var discountPerItem = parseFloat(document.getElementById("discount_per_item").value) || 0;
+
+    // discount in percantage
+    var discountPerIteminpercent = parseFloat(document.getElementById("discount_per_item_in_percentage").value) || 0;
+
+
+    // Ensure quantity is greater than zero
+    if (quantity > 0) {
+        // Calculate total and discount
+        var currentTotal = price * quantity;
+        var totalDiscount = discountPerItem * quantity;
+
+
+
+        if(discountPerItem != ''){
+            document.getElementById("discount").value = totalDiscount.toFixed(2);
+        }
+        else{
+            var percentageamount = (price * discountPerIteminpercent) / 100;
+
+            var totalDiscountperpercentage = percentageamount * quantity
+            document.getElementById("discount").value = totalDiscountperpercentage.toFixed(2);
+        }
+
+
+        // Update the fields with calculated values
+        document.getElementById("current_total").value = currentTotal.toFixed(2);
+    } else {
+        alert("Quantity must be greater than zero");
+        document.getElementById("current_total").value = "";
+        document.getElementById("discount").value = "";
+    }
+
+
+
+
+    // Function to fetch and display the last customer ID when data is scanned/entered in id input field
+    // var xhr = new XMLHttpRequest();
+    // xhr.open("GET", "displayid.php", true); // Path to the PHP file that fetches customer ID
+    // xhr.onload = function() {
+    //     if (this.status == 200) {
+    //         var response = JSON.parse(this.responseText);
+    //         var lastCustomerId = response.last_customer_id;
+    //         document.getElementById("order_customer_id").value = lastCustomerId;
+    //     }
+    // };
+    // xhr.send();
+    var xhr = new XMLHttpRequest();
+        xhr.open("GET", "displayid.php?action=fetch_last_customer_id", true); // Add action parameter to differentiate the task
+        xhr.onload = function() {
+            if (this.status == 200) {
+                var response = JSON.parse(this.responseText);
+                var lastCustomerId = response.last_customer_id;
+
+                // Check if we got a valid customer ID
+                if (lastCustomerId !== null) {
+                    document.getElementById("order_customer_id").value = lastCustomerId;
+                } else {
+                    alert("No customer ID found.");
+                }
+            }
+        };
+        xhr.send();
+
+
+        
+
+        // -----------------------------------------------------------------------------------------
+        // Get the product name from the input field
+        var productName = document.getElementById('Item_of_customer_order').value;
+
+        if (productName === "") {
+            alert("Please enter a product name");
+            return;
+        }
+
+        // Send the product name to the PHP script via Fetch API
+        fetch('displayid.php', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ 
+                action: 'fetch_meter', // Add action parameter for meter fetch
+                product_name: productName 
+            })
+        })
+        .then(response => response.json())
+        .then(data => {
+            // Check if the meter value is received
+            if (data.success) {
+                document.getElementById('Meter').value = data.meter;
+            } else {
+                alert(data.message); // Display any error message from PHP
+                document.getElementById('Meter').value = ""; // Clear the Meter field if no data
+            }
+        })
+        .catch(error => console.error('Error:', error)); // Handle any fetch errors
+
+
+}
+
+
+
+
+
+
+// Function to fetch and display the total bill
+function displayTotalBill() {
+    var xhr = new XMLHttpRequest();
+    xhr.open('GET', 'process_customer_Order.php', true);
+
+    xhr.onload = function() {
+        if (xhr.status === 200) {
+            var response = JSON.parse(xhr.responseText);
+            if (response.total_bill !== undefined) {
+                var totalBill = parseFloat(response.total_bill);
+                if (!isNaN(totalBill)) {
+                    // Display total bill in the input field with id 'total_bill'
+                    document.getElementById('total_bill').value = totalBill.toFixed(2);
+                } else {
+                    console.error('Error: Response is not a valid number.');
+                }
+            } else {
+                console.error('Error: Total bill not found in response.');
+            }
+        } else {
+            console.error('Error: Server returned status code ' + xhr.status);
+        }
+    };
+
+    xhr.onerror = function() {
+        console.error('Error: Connection error occurred.');
+    };
+
+    xhr.send();
+}
+
+// Call displayTotalBill function initially and whenever needed
+window.onload = function() {
+    displayTotalBill(); // Initial call when page loads
+};
+
+// Example of calling displayTotalBill function after adding an order
+function addOrder() {
+    // Add your logic to add an order here
+    // After adding the order, call displayTotalBill to update total bill
+    displayTotalBill();
+}
+
+
+
+
+
+
+
+
+
+// when weclick  the submit button then alert message display if Quantity field is empty
+function validateForm() {
+    var quantityField = document.getElementById("Quantity").value;
+
+    if (quantityField.trim() === '') {
+        alert("Enter the Quantity");
+        return false;
+    } else {
+        // If the Quantity is filled, submit the form
+        document.getElementById("customerOrderForm").submit();
+    }
+}
+
+
+
+
+function reloadPage() {
+    setTimeout(function() {
+        location.reload();
+    }, 500); // 2000 milliseconds = 2 seconds delay
+}
+
+
+
+</script>
+
+
+
+  <style>
+    /* add customer form start */
+    #addcustomer1{
+        width: 18%;
+        float: left;
+        height: 470px;
+        margin-top: 1%;
+        /* border: 5px solid rgb(247, 17, 17); */
+    }
+    #addcustomer{
+        width: 100%;
+        float: left;
+        height: 405px;
+        /* border: 5px solid black; */
+    }
+     /* form */
+     #addcustomer #form_customer{
+        background-color: aqua;
+        border: 3px solid black;
+        border-top-left-radius: 8px;
+        border-bottom-right-radius: 8px; 
+        border-top-right-radius: 8px;
+        border-bottom-left-radius: 8px;
+        box-shadow: 8px 8px 7px black;
+        width: 100%;
+        padding: 12px;
+        line-height: 30px;
+        height: 400px;
+    }
+    #addcustomer #form_customer:hover{
+        box-shadow: 8px 8px 7px blue;
+    }
+    .row input{
+        border: 1px solid black;
+        margin-top: 1%;
+        border-radius: 5%;
+        width: 98%;
+        font-weight: bolder;
+    }
+    #section {
+      width: 98%;
+      margin-top: 3px;
+      height: 35px;
+    }
+
+
+    #form_customer #btn{
+        width: 80%;
+        height: 45px;
+        margin-top: 6px;
+        margin-left: 15px;
+        border-radius: 10px;
+        border: 3px solid black;
+        box-shadow: 5px 5px 5px black;
+        font-size: 20px;
+        color: black;
+   }
+    #form_customer #btn:hover{
+        color: black;
+      background-color: white;
+      border: 3px solid blue;
+      border-radius: 10px;
+      box-shadow: 5px 5px 5px blue;
+    }
+    /* add customer form end */
+
+
+
+
+
+    /* search bar start */
+    #ordercustomer1 #searchbar{
+        width: 100%;
+        float: left;
+        height: 90px;
+        /* border: 5px solid black; */
+    }
+    #searchbar input[type="text"] {
+      display: inline-block;
+      margin: 20px 20%;
+      padding: 10px;
+      font-size: 16px;
+      width: 300px;
+      border: 2px solid black;
+      border-radius: 7px;
+      box-shadow: 5px 5px 7px blue;
+    }
+    #searchbar input[type="text"]:hover {
+      border-color: blue;
+      box-shadow: 5px 5px 7px black;
+    }
+    /* search bar end  */
+
+
+
+    /* .Add_Customer form  */
+    #ordercustomer1{
+        width: 40%;
+        float: left;
+        height: 490px;
+        margin-left: 1.5%;
+        /* border: 5px solid black; */
+    }
+    #ordercustomer{
+        /* margin-top: 5px; */
+        width: 100%;
+        float: left;
+        border-radius: 20px;
+        box-shadow: 5px 5px 5px black;
+        /* border: 5px solid black; */
+    }
+    #ordercustomer:hover{
+        box-shadow: 5px 5px 5px blue;
+    }
+
+    /* form of Order Customer */
+     #Order_customer{
+        background-color: aqua;
+        border: 3px solid black;
+        border-radius: 20px;
+        width: 100%;
+        padding: 10px;
+        line-height: 20px;
+    }
+    #Order_customer input{
+        line-height: 25px;
+    }
+    #Order_customer h2{
+        padding-left: 18%;
+        font-size: 35px;
+        font-size: 45px;
+        font-family: Fantasy;
+        word-spacing: 10px;
+    }
+
+    /* add order button start  */
+    #Order_customer #btn1{
+        width: 65%;
+        height: 45px;
+        margin-top: 7px;
+        margin-left: 2px;
+        border-radius: 10px;
+        border: 3px solid black;
+        box-shadow: 5px 5px 5px black;
+        font-size: 20px;
+        color: black;
+    }
+    
+    #Order_customer #btn1:hover{
+        color: black;
+      background-color: white;
+      border: 3px solid blue;
+      border-radius: 10px;
+      box-shadow: 5px 5px 5px blue;
+    }
+    #Order_customer #order_customer_id{
+        width: 10%;
+    }
+
+    /* reset button start  */
+    #Order_customer #reset-button{
+        width: 18%;
+        height: 45px;
+        margin-top: 7px;
+        margin-left: 3px;
+        border-radius: 10px;
+        border: 3px solid black;
+        box-shadow: 5px 5px 5px black;
+        font-size: 20px;
+        color: black;
+    }
+    #Order_customer #reset-button:hover{
+        color: black;
+      background-color: white;
+      border: 3px solid blue;
+      border-radius: 10px;
+      box-shadow: 5px 5px 5px blue;
+    }
+
+
+
+
+
+
+    /* dicount divs start  */
+    #maindicountdiv{
+        width: 100%;
+        background-color: rebeccapurple;
+
+    }
+    #maindicountdiv #dicountdiv1{
+        width: 48%;
+        float: left;
+        /* background-color: rgb(241, 184, 184); */
+    }
+    #maindicountdiv #dicountdiv2{
+        width: 50%;
+        float: left;
+        margin-left: 1%;
+        /* background-color: rgb(173, 173, 243); */
+    }
+
+
+
+
+
+    #tabledata{
+        width:39%;
+        float: right;
+        margin-right: 1px;
+        height: 420px;
+        border: 3px solid black;
+        border-collapse: collapse;
+        overflow-y: auto;
+        background-color: aqua;
+        box-shadow: 8px 8px 6px black;
+        border-radius: 20px;
+        /* font-size: 25px; */
+        
+    }
+/* display */
+table {
+    border-collapse: collapse;
+    /* width: 10%; */
+    margin-left: 0px;
+    margin-top: 0px;
+}
+th, td {
+    border: 2px solid #ddd;
+    text-align: left;
+}
+th {
+    background-color: blue;
+    color: white;
+}
+tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+tr:hover {
+    background-color: #e2e2e2;
+}
+
+/* add value autometically  */
+.section {
+            margin-bottom: 10px;
+        }
+
+
+
+
+
+
+
+
+    /* order view btton start */
+    /* #btn3div{
+        width: 39%;
+        float: right;
+        height: 75px;
+    }
+    #btn3div #btn3{
+      width: 60%;
+      height: 50px;
+      color: black;
+      background-color: white;
+      margin-top: 10px;
+      margin-left: 20%;
+      border: 3px solid black;
+      border-radius: 10px;
+      box-shadow: 5px 5px 5px black;
+      font-size: 25px;
+    }
+    #btn3div #btn3:hover{
+      color: black;
+      background-color: white;
+      border: 3px solid blue;
+      border-radius: 10px;
+      box-shadow: 5px 5px 5px blue;
+    } */
+
+
+
+
+
+
+    #resultFrame {
+            width: 95%;
+            height: 300px;
+            border: 3px solid #000;
+            margin-top: 30px;
+            background-color: white;
+            margin-left: 15px;
+            border-radius: 10px;
+        }
+
+
+        
+        /* this is related to product   colour dipslay button and input field */
+        #productResult {
+      width: 45%;
+      height: 300px; /* Increased height for table display */
+      border: 3px solid #000;
+      /* margin-top: 6px; */
+      background-color: white;
+      margin-left: 60%;
+      border-radius: 10px;
+    }
+    #product_name{
+        /* margin-top: 550px; */
+        /* margin-left: 10%; */
+        width: 30%;
+    }
+    #product_colour{
+        margin-left: 10%;
+    }
+
+  </style>
+
+</head>
+<!-- onload="fillTodayDate()" -->
+<body  >
+
+    <div id="form-image" style="background-image: url('images/1.jpg'); height: 880px; background-repeat: no-repeat; background-size: cover; margin: 8px;">
+
+        <div id="addcustomer1">
+            <div id="addcustomer">
+                <form id="form_customer" action="process_customer.php" method="post" target="resultFrame">
+                    <div class="row align-items-start">
+                        <div class="col colour1">
+                            <input type="text" id="first_name" name="first_name" placeholder="First Name" required><br>
+                            <input type="text" id="last_name" name="last_name" placeholder="Last Name"><br>
+                            <select id="section" name="serving_employee" required>
+                                <option value="">Select Employee Name</option>
+                                <option value="Noman">Noman</option>
+                                <option value="Riaz Ahmad">Riaz Ahmad</option>
+                                <option value="Ali_Shah">Ali Shah</option>
+                                <option value="Ramzan">Ramzan</option>
+                                <option value="Ishaq">Ishaq</option>
+                                <option value="Other">Other</option>
+                            </select><br>
+                            <input type="text" id="phone" name="phone" placeholder="Phone Number"><br>
+                            <input type="text" id="address" name="address" placeholder="Address"><br>
+                            <input type="text" id="city" name="city" placeholder="City"><br>
+                            <input type="email" id="email" name="email" placeholder="Email"><br>
+                            <input type="text" id="bank" name="bank" placeholder="Bank"><br>
+                            <input type="text" id="transaction_id" name="transaction_id"  placeholder="Transaction ID"><br>
+                        </div>
+                    </div>
+                    <button id="btn" type="submit" onclick="reloadPage()">Submit</button>
+                </form>
+            </div>
+    
+</div>
+       
+
+
+
+
+
+
+<div id="ordercustomer1">
+    <div id="searchbar">
+        <input type="text" id="search-input" placeholder="Enter Product Name / Price" oninput="handleSearchInput()">
+    </div>
+    <div id="ordercustomer">
+        <form id="Order_customer" action="process_customer_Order.php" method="post" target="resultFrame">
+            <input type="text" id="scannerInput" style="position: absolute; left: -9999px;">
+            <!-- <h2>Customer Order</h2> -->
+
+            <div class="row align-items-start">
+                <div class="col colour4">
+                    <label for="Item_of_customer_order" class="form-label">Item:</label><br>
+                    <input type="text" id="Item_of_customer_order" name="Item_of_customer_order"><br>
+        
+                    <label for="Quantity">Quantity:</label><br>
+                    <input type="text" id="Quantity" name="Quantity" oninput="calculateCurrentTotal()"><br>
+        
+                    <label for="Purchase_date">Purchase date:</label><br>
+                    <input type="date" id="Purchase_date" name="Purchase_date"><br>
+
+                    <label for="Price" class="form-label">Price:</label><br>
+                    <input type="text" id="Price" name="Price"><br>
+
+
+                    
+                    <label for="product_colour_name" class="form-label">Product Colour Name</label><br>
+                    <input type="text" id="product_colour_name" name="product_colour_name" placeholder="Product Colour Name"><br>
+
+                </div>
+        
+                <div class="col colour4">
+                    <label for="Meter" class="form-label">Meter:</label><br>
+                    <input type="number" id="Meter" name="Meter" readonly><br>
+        
+                    <label for="current_total">Current Total:</label><br>
+                    <input type="text" id="current_total" name="current_total"><br>
+        
+
+                    <div id="maindicountdiv">
+                        <div id="dicountdiv1">
+                            <label for="discount_per_item">disc per item</label><br>
+                            <input type="text" id="discount_per_item" placeholder="Number " name="discount_per_item" oninput="calculateCurrentTotal()">
+                        </div>
+                        <div id="dicountdiv2">
+                            <label for="discount_per_item_in_percentage">:</label><br>
+                            <input type="text" id="discount_per_item_in_percentage" placeholder="Percentage %" name="discount_per_item_in_percentage" oninput="calculateCurrentTotal()">
+                        </div>
+                    </div>
+        
+                    
+                    <label for="discount">Total Discount:</label><br>
+                    <input type="number" id="discount" name="discount" readonly><br>
+        
+                </div>
+            </div>
+            <input id="order_customer_id" name="order_customer_id" placeholder="cu_id">
+           
+        
+            <button type="submit" id="btn1" onclick="validateForm()">Add Order</button>
+            <button type="reset" id="reset-button">Reset</button>
+        </form>
+        
+    </div>  
+        <iframe name="resultFrame" id="resultFrame"></iframe>
+</div>
+
+
+    <div id="tabledata">
+        <table>
+            <thead>
+                <tr>
+                    <th>Product Name</th>
+                    <th>Retail_Price</th>
+                    <th>Meter</th>
+                    <th>customer id</th>
+                    <th>Quantity</th>
+                    <th>id</th>
+                </tr>
+            </thead>
+            <tbody id="data-table">    
+            </tbody>
+        </table>
+    </div>
+    <!-- <div id="btn3div">
+        <button id="btn3" ><a href="Print_bill.php">Order View</a></button>
+    </div> -->
+    
+
+
+
+    <div class="container mt-4">
+        <!-- Search Form -->
+        <form action="display_product.php" method="GET" target="productResult">
+          <div class="mb-3">
+            <input type="hidden" name="product_name" id="product_name" class="form-control" placeholder="Enter Product Name" required>
+          </div>
+          <button type="submit" id="product_colour" class="btn btn-primary">Search Colour</button>
+        </form>
+        <!-- Result Frame for Displaying Data -->
+        <div class="mt-4">
+          <!-- Using productResult instead of resultFrame -->
+          <iframe name="productResult" id="productResult"></iframe>
+        </div>
+      </div>
+
+    </div>
+
+
+    
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+
+    <script>
+        //--------------------------------------------------------------------------------
+        document.getElementById('btn1').addEventListener('click', function() {
+            setTimeout(function() {
+                window.location.reload();
+            }, 500); // 5000 milliseconds = 5 seconds
+        });
+
+
+        // JavaScript to handle input and autofill other fields through 
+        // qr scanner fetch data from qrq and auto fill input field ---------------------------------------
+        let inputTimeout; // Variable to hold the timeout
+
+// Function to handle the scanned data
+function handleScannedData(scannedData) {
+    console.log("Scanned Data:", scannedData); // Log scanned data
+
+    const separatorIndex = scannedData.indexOf(' - ');
+    if (separatorIndex !== -1) {
+        const dataParts = scannedData.split(' - ');
+        const productName = dataParts[0].trim();
+        const colourName = dataParts[1].trim();
+        // const totalMeter = dataParts[2].trim();
+        const retailPrice = dataParts[2].trim();
+
+
+        // Set the input field values
+        document.getElementById('Item_of_customer_order').value = productName;
+        document.getElementById('product_colour_name').value = colourName;
+        // document.getElementById('Meter').value = totalMeter;
+        document.getElementById('Price').value = retailPrice;
+
+        // Clear scanner input after processing
+        document.getElementById('scannerInput').value = '';
+    } else {
+        console.log('Scanned data does not contain the expected separator " - " or is incomplete.');
+    }
+}
+
+// Prevent default form submission when Enter key is pressed
+document.getElementById('Order_customer').addEventListener('keydown', function(e) {
+    if (e.key === 'Enter') {
+        e.preventDefault(); // Stop form from submitting when Enter key is pressed
+    }
+});
+
+// Listen for input events from the hidden scanner input
+document.getElementById('scannerInput').addEventListener('input', function() {
+    const scannedData = this.value.trim();
+    clearTimeout(inputTimeout);
+    inputTimeout = setTimeout(() => {
+        handleScannedData(scannedData);
+    }, 20); // Delay processing to avoid race conditions
+});
+
+
+// Function to initiate focus on the hidden input (for scanners)
+function focusScannerInput() {
+    const scannerInput = document.getElementById('scannerInput');
+    scannerInput.focus(); // Keep the focus on the hidden input field
+}
+
+// Ensure page is focused to capture scanner input when loaded
+document.addEventListener('DOMContentLoaded', focusScannerInput);
+
+// Disable auto form submission except on button click
+document.getElementById('Order_customer').addEventListener('submit', function(e) {
+    e.preventDefault(); // Stop auto-submission by default
+
+    // Allow manual submission via submit button
+    if (document.activeElement && document.activeElement.id === 'btn1') {
+        this.submit(); // Submit form only when submit button is clicked
+    }
+});
+
+
+
+
+
+ // This function will be called when a row is clicked in the iframe
+ function selectColour(colourName) {
+            // Automatically populate the input field with the selected colour name
+            document.getElementById('product_colour_name').value = colourName;
+        }
+
+
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+
+</html>

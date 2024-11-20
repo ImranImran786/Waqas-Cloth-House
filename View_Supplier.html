@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>View Suppliers</title>
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+    fetch('process_view_supplier.php')
+        .then(response => response.json())
+        .then(data => {
+            const tbody = document.getElementById('supplier-data');
+            let html = '';
+            data.forEach(supplier => {
+                html += `<tr>
+                            <td>${supplier.supplier_id}</td>
+                            <td>${supplier.Delivery_Boy_Name}</td>
+                            <td>${supplier.Customer_Address}</td>
+                            <td>${supplier.Bill_ID}</td>
+                            <td>${supplier.Ship_ID}</td>
+                            <td>${supplier.Shipping_Cost}</td>
+                            <td>${supplier.Date_of_Shipment}</td>
+                            <td>${supplier.Mode_of_Travel}</td>
+                         </tr>`;
+            });
+            tbody.innerHTML = html;
+        })
+        .catch(error => {
+            console.error('Error fetching supplier data:', error);
+        });
+});
+
+  </script>
+
+  <style>
+    /* #btnform {
+      width: 150px;
+      height: 65px;
+      margin-top: 10px;
+      justify-content: center;
+      border-radius: 10px;
+      background-color: white;
+      border: 2px solid blue;
+      opacity: 0.6;
+      font-weight: 1000;
+    }
+
+    #btnform:hover {
+      color: black;
+    }
+
+    #main_btn {
+      margin-left: 9%;
+    }
+
+    #main_btn .View_Supplier {
+      border: 4px solid red;
+    }
+
+    #backdiv{
+      float: left;
+      width: 15%;
+    }
+
+    #backdiv #back {
+      width: 70%;
+      height: 50px;
+      color: black;
+      background-color: white;
+      margin-top: 410px;
+      margin-left: 10%;
+      border: 3px solid black;
+      border-radius: 10px;
+      box-shadow: 5px 5px 5px black;
+      font-size: 25px;
+    }
+    #backdiv #back:hover {
+      color: black;
+      background-color: white;
+      border: 3px solid blue;
+      border-radius: 10px;
+      box-shadow: 5px 5px 5px blue;
+    } */
+
+
+
+
+
+
+
+
+
+    /* Scrollable table */
+    .table-container {
+      float: right;
+        border-collapse: collapse;
+        margin-right: 4%;
+        width: 80%;
+        margin-top: 50px;
+        height: 350px; 
+        overflow-y: auto;
+        background-color: aqua;
+    }
+
+    .table thead th {
+      position: sticky;
+      top: 0;
+      background: white;
+      z-index: 1;
+    }
+
+
+
+    @media (min-width: 1728px) and (max-width: 1920px) {
+      .table-container {
+    width: 80%;
+    margin-right: 5%;
+    overflow-x: auto;
+    overflow-y: auto;
+  }
+  #form-image{
+    width: 100%;
+  }
+
+  /* #backdiv #back {
+      
+      width: 70%;
+      height: 50px;
+      color: black;
+      background-color: white;
+      margin-top: 400px;
+      margin-left: 10%;
+    } */
+}
+  </style>
+</head>
+<body>
+  <!-- Navigation and buttons -->
+  <div id="form-image" style="background-image: url('images/1.jpg'); height: 503px; background-repeat: no-repeat; background-size: cover; margin: 8px;">
+    <!-- <div id="main_btn">
+      <div>
+        <button type="button" id="btnform"><a href="View_Customer.html">View_Customer</a></button>
+        <button type="button" id="btnform"><a href="View_Employee.html">View_Employee</a></button>
+        <button type="button" id="btnform"><a href="View_Stock.html">View_Stock</a></button>
+        <button class="View_Supplier" type="button" id="btnform"><a href="View_Supplier.html">View_Supplier</a></button>
+        <button type="button" id="btnform"><a href="View_Purchases.html">View_Purchases</a></button>
+        <button type="button" id="btnform"><a href="V_sale.php">View_Sales</a></button>
+      </div>
+    </div>
+    
+    <div id="backdiv">
+      <button id="back"><a href="admin_dashboard.html">Back</a></button>
+    </div> -->
+
+    <!-- Table to display suppliers -->
+      <div class="table-container">
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th>Supplier ID</th>
+              <th>Delivery Boy Name</th>
+              <th>Customer Address</th>
+              <th>Bill ID</th>
+              <th>Ship ID</th>
+              <th>Shipping Cost</th>
+              <th>Date of Shipment</th>
+              <th>Mode of Travel</th>
+            </tr>
+          </thead>
+          <tbody id="supplier-data">
+            <!-- Data will be populated by the PHP script -->
+          </tbody>
+        </table>
+      </div>
+
+  </div>
+
+  <!-- Include the PHP script to fetch and display data -->
+  <script src="view_suppliers.js"></script>
+</body>
+</html>
